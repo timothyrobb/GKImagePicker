@@ -1,8 +1,6 @@
-### GKImagePicker 
+### GKImagePicker
 
-A fork of [GKImagePicker](https://github.com/gekitz/GKImagePicker) by [@gekitz](http://www.twitter.com/gekitz), taking off in a slightly different tangent. Notable changes to it are:
-- Utilizes an image cropper similar to Apple's own iOS 7 redesign
-- Uses the available space of the screen as much as possible regardless of the size of the image being cropped. Also ensures that large crop sizes are scaled to still fit in the screen.
+A fork of [GKImagePicker](https://github.com/pixelshipper/GKImagePicker) by [@gekitz](http://www.twitter.com/gekitz) and [pixelshipper](https://github.com/pixelshipper) which allows customization of text displayed from it's action sheet.
 
 ### How to use it
 
@@ -13,12 +11,19 @@ A fork of [GKImagePicker](https://github.com/gekitz/GKImagePicker) by [@gekitz](
     self.imagePicker = [[GKImagePicker alloc] init];
     self.imagePicker.cropSize = CGSizeMake(320, 496);
     self.imagePicker.delegate = self;
-    
+
+    // Either
+    [self.imagePicker showActionSheetOnViewController:self];
+    // Or
     [self.imagePicker showActionSheetOnViewController:self onPopoverFromView:btn];
+    // Or
+    [self.imagePicker showActionSheetOnViewController:self withCameraTitle:@"Take Photo" galleryTitle:@"Choose Photo"];
+    // Or
+    [self.imagePicker showActionSheetOnViewController:self onPopoverFromView:btn withCameraTitle:@"Take Photo" galleryTitle:@"Choose Photo"];
 
 ### License
 Under MIT. See license file for details.
 
 
 
-    
+
