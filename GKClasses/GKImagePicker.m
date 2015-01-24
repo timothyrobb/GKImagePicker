@@ -98,7 +98,28 @@
 #pragma mark -
 #pragma mark - Action Sheet and Image Pickers
 
-- (void)showActionSheetOnViewController:(UIViewController *)viewController onPopoverFromView:(UIView *)popoverView
+- (void)showActionSheetOnViewController:(UIViewController *)viewController {
+	[self showActionSheetOnViewController:viewController
+						onPopoverFromView:nil
+						  withCameraTitle:NSLocalizedString(@"Image from Camera", @"Image from Camera")
+							 galleryTitle:NSLocalizedString(@"Image from Library", @"Image from Library")];
+}
+
+- (void)showActionSheetOnViewController:(UIViewController *)viewController onPopoverFromView:(UIView *)popoverView {
+	[self showActionSheetOnViewController:viewController
+						onPopoverFromView:popoverView
+						  withCameraTitle:NSLocalizedString(@"Image from Camera", @"Image from Camera")
+							 galleryTitle:NSLocalizedString(@"Image from Library", @"Image from Library")];
+}
+
+- (void)showActionSheetOnViewController:(UIViewController *)viewController withCameraTitle:(NSString *)cameraTitle galleryTitle:(NSString *)galleryTitle {
+	[self showActionSheetOnViewController:viewController
+						onPopoverFromView:nil
+						  withCameraTitle:cameraTitle
+							 galleryTitle:galleryTitle];
+}
+
+- (void)showActionSheetOnViewController:(UIViewController *)viewController onPopoverFromView:(UIView *)popoverView withCameraTitle:(NSString *)cameraTitle galleryTitle:(NSString *)galleryTitle
 {
     self.presentingViewController = viewController;
     self.popoverView = popoverView;
@@ -107,7 +128,7 @@
                                                              delegate:(id)self
                                                     cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel")
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"Image from Camera", @"Image from Camera"), NSLocalizedString(@"Image from Library", @"Image from Library"), nil];
+                                                    otherButtonTitles:cameraTitle, galleryTitle, nil];
     actionSheet.delegate = self;
     
     if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
