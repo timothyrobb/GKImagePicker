@@ -30,8 +30,9 @@
 
 - (id)init{
     if (self = [super init]) {
-        
-        self.cropSize = CGSizeMake(320, 320);
+		
+		int screenWidth = [UIScreen mainScreen].bounds.size.width;
+        self.cropSize = CGSizeMake(screenWidth, screenWidth);
         self.resizeableCropArea = NO;
     }
     return self;

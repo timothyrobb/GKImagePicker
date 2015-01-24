@@ -31,9 +31,10 @@
 
 
 - (void)showPicker:(UIButton *)btn{
-    
+	
+	int screenWidth = [UIScreen mainScreen].bounds.size.width;
     self.imagePicker = [[GKImagePicker alloc] init];
-    self.imagePicker.cropSize = CGSizeMake(320, 496);
+    self.imagePicker.cropSize = CGSizeMake(screenWidth, 496);
     self.imagePicker.delegate = self;
     
     [self.imagePicker showActionSheetOnViewController:self onPopoverFromView:btn];
