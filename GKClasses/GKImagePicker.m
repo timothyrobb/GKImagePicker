@@ -10,7 +10,7 @@
 
 #import "GKImageCropViewController.h"
 
-@interface GKImagePicker ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImageCropControllerDelegate, UIActionSheetDelegate>
+@interface GKImagePicker ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImageCropControllerDelegate>
 @property (nonatomic, weak) UIViewController *presentingViewController;
 @property (nonatomic, weak) UIView *popoverView;
 @property (nonatomic, strong) UIPopoverController *popoverController;
@@ -96,50 +96,6 @@
 #pragma mark -
 #pragma mark - Action Sheet and Image Pickers
 
-- (void)showActionSheetOnViewController:(UIViewController *)viewController {
-	[self showActionSheetOnViewController:viewController
-						onPopoverFromView:nil
-						  withCameraTitle:NSLocalizedString(@"Image from Camera", @"Image from Camera")
-							 galleryTitle:NSLocalizedString(@"Image from Library", @"Image from Library")];
-}
-
-- (void)showActionSheetOnViewController:(UIViewController *)viewController onPopoverFromView:(UIView *)popoverView {
-	[self showActionSheetOnViewController:viewController
-						onPopoverFromView:popoverView
-						  withCameraTitle:NSLocalizedString(@"Image from Camera", @"Image from Camera")
-							 galleryTitle:NSLocalizedString(@"Image from Library", @"Image from Library")];
-}
-
-- (void)showActionSheetOnViewController:(UIViewController *)viewController withCameraTitle:(NSString *)cameraTitle galleryTitle:(NSString *)galleryTitle {
-	[self showActionSheetOnViewController:viewController
-						onPopoverFromView:nil
-						  withCameraTitle:cameraTitle
-							 galleryTitle:galleryTitle];
-}
-
-- (void)showActionSheetOnViewController:(UIViewController *)viewController onPopoverFromView:(UIView *)popoverView withCameraTitle:(NSString *)cameraTitle galleryTitle:(NSString *)galleryTitle
-{
-    self.presentingViewController = viewController;
-    self.popoverView = popoverView;
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:(id)self
-                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel")
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:cameraTitle, galleryTitle, nil];
-    actionSheet.delegate = self;
-    
-    if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        [actionSheet showFromRect:self.popoverView.frame inView:self.presentingViewController.view animated:YES];
-    } else {
-        if (self.presentingViewController.navigationController.toolbar) {
-            [actionSheet showFromToolbar:self.presentingViewController.navigationController.toolbar];
-        } else {
-            [actionSheet showInView:self.presentingViewController.view];
-        }
-    }
-}
-
 - (void)presentImagePickerController
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -185,18 +141,6 @@
     [self presentImagePickerController];
 }
 
-#pragma mark -
-#pragma mark - UIActionSheetDelegate
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            [self showCameraImagePicker];
-            break;
-        case 1:
-            [self showGalleryImagePicker];
-            break;
-    }
-}
 
 @end

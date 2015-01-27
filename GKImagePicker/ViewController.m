@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "GKImagePicker.h"
 
-@interface ViewController ()<GKImagePickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ViewController ()<GKImagePickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) GKImagePicker *imagePicker;
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (nonatomic, strong) UIImagePickerController *ctr;
@@ -37,7 +37,7 @@
     self.imagePicker.cropSize = CGSizeMake(screenWidth, 496);
     self.imagePicker.delegate = self;
     
-    [self.imagePicker showActionSheetOnViewController:self onPopoverFromView:btn];
+    [self showActionSheetOnPopoverFromView:btn];
 }
 
 - (void)showNormalPicker:(UIButton *)btn{
@@ -65,7 +65,7 @@
     self.imagePicker.delegate = self;
 	self.imagePicker.resizeableCropArea = YES;
 
-    [self.imagePicker showActionSheetOnViewController:self onPopoverFromView:btn];
+    [self showActionSheetOnPopoverFromView:btn];
 }
 
 - (void)viewDidLoad
@@ -129,6 +129,40 @@
     self.imgView.frame = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 
                           CGRectMake(20, 84, CGRectGetWidth(self.view.bounds) - 40, CGRectGetHeight(self.view.bounds) - 104) : 
                           CGRectMake(20, CGRectGetMaxY(self.resizableButton.frame) + 20, CGRectGetWidth(self.view.bounds) - 40, CGRectGetHeight(self.view.bounds) - 20 - (CGRectGetMaxY(self.resizableButton.frame) + 20) ));
+}
+
+- (void)showActionSheetOnPopoverFromView:(UIView *)popoverView {
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+															 delegate:(id)self
+													cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel")
+											   destructiveButtonTitle:nil
+													otherButtonTitles:NSLocalizedString(@"Image from Camera", @"Image from Camera"),
+																	  NSLocalizedString(@"Image from Library", @"Image from Library"), nil];
+	actionSheet.delegate = self;
+	
+	if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+		[actionSheet showFromRect:popoverView.frame inView:self.presentingViewController.view animated:YES];
+	} else {
+		if (self.presentingViewController.navigationController.toolbar) {
+			[actionSheet showFromToolbar:self.presentingViewController.navigationController.toolbar];
+		} else {
+			[actionSheet showInView:self.presentingViewController.view];
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	switch (buttonIndex) {
+		case 0:
+			[self.imagePicker showCameraImagePicker];
+			break;
+		case 1:
+			[self.imagePicker showGalleryImagePicker];
+			break;
+	}
 }
 
 # pragma mark -
