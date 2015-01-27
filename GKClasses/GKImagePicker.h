@@ -16,9 +16,9 @@
 @property (nonatomic, assign) CGSize cropSize; //default value is 320x320 (which is exactly the same as the normal imagepicker uses)
 @property (nonatomic, assign) BOOL resizeableCropArea;
 
-- (void)presentImagePickerController;
-- (void)showCameraImagePicker;
-- (void)showGalleryImagePicker;
+- (void)presentImagePickerControllerOnHost:(UIViewController *)hostViewController;
+- (void)showCameraImagePickerOnHost:(UIViewController *)hostViewController;
+- (void)showGalleryImagePickerOnHost:(UIViewController *)hostViewController;
 
 @end
 

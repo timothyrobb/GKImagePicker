@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name           =  'GKImagePicker@timothyrobb'
-  s.version        =  '0.0.5'
+  s.version        =  '0.0.6'
   s.license        =  'MIT'
   s.platform       =  :ios, '8.0'
   s.summary        =  'Image Picker with support for custom crop areas.'

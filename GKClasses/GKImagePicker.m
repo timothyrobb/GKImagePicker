@@ -11,7 +11,6 @@
 #import "GKImageCropViewController.h"
 
 @interface GKImagePicker ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImageCropControllerDelegate>
-@property (nonatomic, weak) UIViewController *presentingViewController;
 @property (nonatomic, weak) UIView *popoverView;
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -96,24 +95,24 @@
 #pragma mark -
 #pragma mark - Action Sheet and Image Pickers
 
-- (void)presentImagePickerController
+- (void)presentImagePickerControllerOnHost:(UIViewController *)hostViewController
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerController];
         [self.popoverController presentPopoverFromRect:self.popoverView.frame
-                                                inView:self.presentingViewController.view
+                                                inView:hostViewController.view
                               permittedArrowDirections:UIPopoverArrowDirectionAny
                                               animated:YES];
         
     } else {
         
-        [self.presentingViewController presentViewController:self.imagePickerController animated:YES completion:nil];
+        [hostViewController presentViewController:self.imagePickerController animated:YES completion:nil];
         
     }
 }
 
-- (void)showCameraImagePicker {
+- (void)showCameraImagePickerOnHost:(UIViewController *)hostViewController {
 
 #if TARGET_IPHONE_SIMULATOR
 
@@ -127,18 +126,18 @@
     self.imagePickerController.delegate = self;
     self.imagePickerController.allowsEditing = NO;
 
-    [self presentImagePickerController];
+	[self presentImagePickerControllerOnHost:hostViewController];
 #endif
 
 }
 
-- (void)showGalleryImagePicker {
+- (void)showGalleryImagePickerOnHost:(UIViewController *)hostViewController {
     self.imagePickerController = [[UIImagePickerController alloc] init];
     self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     self.imagePickerController.delegate = self;
     self.imagePickerController.allowsEditing = NO;
 
-    [self presentImagePickerController];
+    [self presentImagePickerControllerOnHost:hostViewController];
 }
 
 
